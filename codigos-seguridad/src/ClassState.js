@@ -1,4 +1,5 @@
 import React from 'react';
+import { Loading } from '../src/Loading';
 
 class ClassState extends React.Component {
     constructor(props) {
@@ -6,8 +7,32 @@ class ClassState extends React.Component {
 
         this.state = {
             error: true,
+            loading: false,
         };
     }
+
+    //UNSAFE_componentWillMount() {
+        //console.log("componentWillMount")
+    //}
+
+    //componentDidMount() {
+    //    console.log("componentWillUnmount")
+    //}
+
+    componentDidUpdate() {
+        console.log('actualizacion'); //Cada vez que llamemos a this.state, vamos a llamar a CompoenentDidUpdate and will show an update in console.log
+
+        if (!!this.state.loading) {
+            setTimeout(() => {
+                console.log("Haciendo la validacion")
+    
+                this.setState( { loading: false })
+    
+                console.log("terminando la validacion")
+            }, 3000)
+        }
+    } 
+
     render() {
         return (
             <div>
@@ -19,11 +44,13 @@ class ClassState extends React.Component {
                     <p>Error: the code is incorrect</p>
                 )}
 
+                {this.state.loading && (
+                    <Loading />
+                )}
+
                 <input placeholder="security code"/>
                 <button
-                    onClick={ () => 
-                        this.setState( prevState => ({ error: !prevState.error }) )
-                    }
+                    onClick={ () => this.setState( { loading: true } ) }
                 >Check</button>
             </div>
         )
