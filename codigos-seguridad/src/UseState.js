@@ -1,8 +1,8 @@
 import React from 'react';
 
-const SECURITY_CODE = 'paradigma';
+const SECURITY_CODE = "paradigma";
 
-function UseState( { name} ) {
+function UseState( {name} ) {
 
     const [value, setValue] = React.useState('');
     const [error, setError] = React.useState(false);
@@ -19,6 +19,7 @@ function UseState( { name} ) {
 
                 if(value === SECURITY_CODE) {
                     setLoading(false);
+                    // setError (false)
                 } else {
                     setError(true);
                     setLoading(false);
@@ -30,23 +31,25 @@ function UseState( { name} ) {
 
         console.log("Terminando el efecto")
     }, [loading]);
+
     return (
         <div>
-            <h2>Eliminate {name} </h2>
+            <h2>Delete {name} </h2>
 
             <p>Please, write here the security code</p>
 
-            {error && (
+            { (error && !loading) && (
                 <p>Error: the code is incorrect</p>
             )}
             {loading && (
                 <p>Loading... </p>
             )}
+
             <input 
                 placeholder="security code"
                 value={value}
                 onChange={(event) => {
-                    setError(false);
+                    // setError(false); The problem here is it has to validate in every onchange
                     setValue(event.target.value);
                 }}  
             />
