@@ -17,11 +17,12 @@ function UseState( { name} ) {
             setTimeout(() => {
                 console.log("Haciendo la validacion")
 
-                if(value !== SECURITY_CODE) {
+                if(value === SECURITY_CODE) {
+                    setLoading(false);
+                } else {
                     setError(true);
+                    setLoading(false);
                 } 
-                setLoading(false);
-
     
                 console.log("terminando la validacion")
             }, 3000)
@@ -32,9 +33,6 @@ function UseState( { name} ) {
     return (
         <div>
             <h2>Eliminate {name} </h2>
-
-
-            
 
             <p>Please, write here the security code</p>
 
@@ -48,11 +46,15 @@ function UseState( { name} ) {
                 placeholder="security code"
                 value={value}
                 onChange={(event) => {
+                    setError(false);
                     setValue(event.target.value);
                 }}  
             />
             <button
-                onClick={() => setLoading(true)} //Or onClick={() => setError(prevState => !prevState )}
+                onClick={() => {
+                    // setError(false); It worked
+                    setLoading(true);
+                }} //Or onClick={() => setError(prevState => !prevState )}
             >Check</button>
         </div>
     )
